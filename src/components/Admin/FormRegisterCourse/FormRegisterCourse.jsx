@@ -1,210 +1,248 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function goBack(){ 
+/*function goBack(){ 
     window.location.href = "/adminDashboard";
-}
+}*/
 
-function FormRegisterCourse() {
+const FormRegisterCourse = () => {
+  const [users, setUsers] = useState([]); 
+  const [courses, setCourses] = useState([]);
+  const [activityName, setActivityName] = useState("");
+  const [period, setPeriod] = useState("");
+  const [coordinator, setCoordinator] = useState("");
+  const [year, setYear] = useState("");
+  const [credits, setCredits] = useState("");
+  const [schedule, setSchedule] = useState("");
+  //const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const maxLength = 150;
+
+  //ip address of the backend
+  const API_IP_ADDRESS = process.env.REACT_APP_API_IP_ADDRESS;
+
+  // for counting characters in the description
+  const handleChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  useEffect(() => {
+    const getCoordinators = async () => {
+      try {
+        const url = API_IP_ADDRESS + "/api/userType/3";
+        var response = await axios.get(url);
+
+        console.log(response);
+        setUsers(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCourses = async () => {
+        try {
+          const url = API_IP_ADDRESS + "/api/courses_name/";
+          var response = await axios.get(url);
+  
+          console.log(response);
+          setCourses(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      getCourses();
+      getCoordinators();
+    }, []);
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      !coordinator ||
+      !period ||
+      !activityName ||
+      !description ||
+      !schedule ||
+      !credits
+    ) {
+      alert("Por favor llena todos los campos");
+      return;
+    }
+    try {
+      const url = API_IP_ADDRESS + "/api/create_course";
+      const response = await axios.post(url, {
+        coordinator_user_id: coordinator,
+        quarter_id: period,
+        course_name_id: activityName,
+        description: description,
+        schedule: schedule,
+        is_active: 1,
+        credits_obtained: credits,
+        course_img: "",
+        is_open: 1,
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-      <>
-
-<div className="container ">
-                <div className="row">
-                    <div className="col-md-12">
-            <form>
-            <h1 className='title-change-password-disposition title-register-style'>Añadir curso al catalogo</h1>
-                <div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputAddress">Coordinador</label>
-                            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>                        
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputAddress2">Apellidos</label>
-                            <input type="text" class="form-control" id="inputAddress2" placeholder="ej. Corpus Flores"/>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress2">Matrícula</label>
-                            <input type="text" class="form-control" id="inputAddress2" placeholder="ej. utm00030600"/>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputAddress2">Programa de estudios</label>
-                            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress2">Cuatrimestre actual</label>
-                            <input type="number" class="form-control" id="inputAddress2" placeholder="ej. 6"/>
-                        </div>
-                    </div>  
+    <>
+      <div className="container ">
+        <div className="row">
+          <div className="col-md-12">
+            <form onSubmit={handleSubmit}>
+              <h1 className="title-change-password-disposition title-register-style">
+                Abrir un curso 
+              </h1>
+              <br />
+              <div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label for="inputAddress">Curso</label>
+                    <select
+                      className="custom-select mr-sm-2"
+                      id="inlineFormCustomSelect"
+                      value={activityName}
+                      onChange={(e) => setActivityName(e.target.value)}>
+                      <option selected>Choose...</option>
+                      {courses.map((crs, index) => (
+                        <option key={index} value={crs.id}>
+                          {crs.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label for="inputAddress">Coordinador</label>
+                    <select
+                      className="custom-select mr-sm-2"
+                      id="inlineFormCustomSelect"
+                      value={coordinator}
+                      onChange={(e) => setCoordinator(e.target.value)}
+                    >
+                      <option selected>Choose...</option>
+                      {users.map((usr, index) => (
+                        <option key={index} value={usr.id}>
+                          {usr.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="@utma.edu.mx"/>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Confirma tu email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="@utma.edu.mx"/>
-                        </div>
-                    </div>
-                    <div  class="form-row align-items-center">
-                        <div class="col-auto col-md-2">
-                            <button type="submit" class="btn btn-primary btn-style-change-password">Enviar código</button>
-                        </div>
-                        <div class="col-auto">
-                            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">Introduce el código</div>
-                                </div>
-                                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="ej. 4H6rf7"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label for="inputAddress">Crea una contraseña</label>
-                        <input type="password" class="form-control" id="inputAddress" placeholder="Contraseña"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2">Introduce nuevamente la contraseña</label>
-                        <input type="password" class="form-control" id="inputAddress2" placeholder="Confirmar la contraseña"/>
-                    </div> 
-                    <div class="form-group">
-
-                        <label className='password-text-recomendation' for="inputAddress">¡Debe contener más de ocho digitos y es recomendable el uso de caracteres especiales para mejorar la seguridad de tu contraseña!</label>
-                    </div>   
-                </div>
-                <button type="submit" class="btn btn-primary btn-style-change-password"><Link to="/" className='text-btn-style-change-password'>Registrarme</Link></button>
+              </div>
               
-            </form>
-
-        </div>
-    </div>
-</div>
-
-
-
-
-      
-      <div id='card-disposition'>
-        <div className="card"  style={{ width: '45rem' }} >
-                <div class="card-body">
-                    <form className='form-container'>
-                        <div>
-                            <h1 className='title-card'>Añadir Curso</h1>
-                        </div>
-                        <div className='body-card-design'>
-                        <div class="form-group">
-                                <label for="quarterSelect">Coordinador</label>
-                                <select class="form-control" id="quarterSelect">
-                                    <option>Emilio Romo</option>
-                                    <option>Carlos Galindo</option>
-                                    <option>Xochitl Leos</option>
-                                    <option>Erasmo Diaz</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Cuatrimestre</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Enero - Abril</option>
-                                    <option>Mayo  - Agosto</option>
-                                    <option>Septiembre - Diciembre</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="courseSelect">Actividad</label>
-                                <select class="form-control" id="courseSelect">
-                                    <option>Futbol</option>
-                                    <option>Ajedrez</option>
-                                    <option>Literatura</option>
-                                    <option>Voley</option>
-                                    <option>Baloncesto</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="courseSelect">Creditos al cumplir la actividad</label>
-                                <select class="form-control" id="courseSelect">
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>30</option>
-                                    <option>40</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="courseSelect">Imagen del curso</label>
-                                <label for="imgFile">Selecciona la imagen</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1"/>
-                            </div>
-
-                            
-                            <div class="form-check form-check-inline checkbox-container">
-                                <label for="courseSelect">Horarios</label>
-                                <div>
-                                    <div className='form-check form-check-inline'>
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Lunes"/>
-                                        <label class="form-check-label" for="inlineCheckbox1">Lunes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Martes"/>
-                                        <label class="form-check-label" for="inlineCheckbox2">Martes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Miercoles"/>
-                                        <label class="form-check-label" for="inlineCheckbox2">Miercoles</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Jueves"/>
-                                        <label class="form-check-label" for="inlineCheckbox2">Jueves</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Viernes"/>
-                                        <label class="form-check-label" for="inlineCheckbox2">Viernes</label>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="firstRadio" id="exampleRadio" value="16:00 - 17:00" checked/>
-                                <label class="form-check-label" for="firstRadio">
-                                    16:00 - 17:00
-                                </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="secondRadio" id="secondRadio" value="17:00 - 18:00"/>
-                                <label class="form-check-label" for="secondRadio">
-                                    17:00 - 18:00
-                                </label>
-                            </div>
-                            <div className="btn-style-submit">
-                                <button id="goBack" onClick={goBack} style={{marginTop: '20px'}} className="btn btn-primary btn-disposition">Aceptar</button>
-                            </div>
-                        </div>
-                        
-                    </form>
+              <div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label for="inputAddress">Periodo Cuatrimestral</label>
+                    <select
+                      className="custom-select mr-sm-2"
+                      id="inlineFormCustomSelect"
+                      value={period}
+                      onChange={(e) => setPeriod(e.target.value)}
+                    >
+                      <option selected>Choose...</option>
+                      <option value="1">Enero - Abril</option>
+                      <option value="2">Mayo - Agosto</option>
+                      <option value="3">Septiembre - Diciembre</option>
+                    </select>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label for="inputAddress">Año</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputAddress"
+                      placeholder="ej. 2020"
+                      value={year}
+                      onChange={(e) => setYear(e.target.value)}
+                    />
+                  </div>
                 </div>
-            </div>
+              </div>
+              <div>
+                <div className="form-row">
+                  
+                </div>
+              </div>
+              <div>
+                <div className="form-row">
+                  <div className="col-md-5">
+                    <div className="form-group">
+                      <label for="inputAddress2">Asignar horario</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="inputAddress2"
+                        placeholder="ej. Lunes, Miercoles y Jueves de 16:00 a 18:00 hrs"
+                        value={schedule}
+                        onChange={(e) => setSchedule(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group col-md-3">
+                      <label for="inputAddress2">
+                        Creditos liberados al finalizar
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="inputAddress2"
+                        placeholder="ej. 20"
+                        value={credits}
+                        onChange={(e) => setCredits(e.target.value)}
+                      />
+                    
+                  </div>
+                  {/*<div className="col-md-4">
+                    <label for="courseSelect">Imagen del curso</label>
+                    <inputr
+                      type="file"
+                      className="form-control-file"
+                      accept="image/*"
+                      id="exampleFormControlFile1"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                    />
+                    {/* AQUI FALTA ALGO 
+                  </div>*/}
+                </div>
+              </div>
+              <br />
+              <div className="form-row">
+                <div className="form-group col-md-12">
+                  <label for="inputAddress2">
+                    Descripción general de la actividad
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputAddress2"
+                    placeholder="Introduce una descripción general de máximo 150 caracteres ..."
+                    value={description}
+                    onChange={handleChange}
+                    maxLength={maxLength}
+                  />
+                  <small>
+                    {description.length}/{maxLength} caracteres
+                  </small>
+                </div>
+              </div>
+              {/*<button type="submit" className="btn btn-primary btn-style-change-password" ><Link to="/admin-dashboard" className='text-btn-style-change-password'>Registrar curso</Link></button>*/}
+              <button
+                className="btn btn-primary btn-style-change-password"
+                type="submit"
+              >
+                Registrar curso
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-     
-      </>
+    </>
   );
 }
 

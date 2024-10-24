@@ -1,18 +1,45 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState({ token: null, roles: [] });
 
-  const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
+  useEffect(() => {
+    const API_IP_ADDRESS = process.env.REACT_APP_API_IP_ADDRESS;
+ 
+    const checkAuth = async () => {
+      try {
+        if (!document.cookie) {
+          // para productivo este mensaje no existira
+          console.log('No hay cookies presentes. La sesión no ha sido iniciada previamente.');
+          return;
+        }
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => useContext(AuthContext);
+        const response = await axios.get(`${API_IP_ADDRESS}/api/check-auth`, { withCredentials: true });
+        console.log('Respuesta de autenticación:', response); // Log la respuesta exitosa
+        setAuth({ token: response.data.token, roles: response.data.roles });
+      } catch (error) {
+        console.error('Respuesta de error:', error.response); // Log la respuesta de error
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.error('No autorizado: Verifica tus credenciales y configuración del servidor.');
+          } else if (error.response.status === 404) {
+            console.error('Endpoint no encontrado: Verifica si el endpoint existe en el backend.');
+          }
+        } else {
+          console.error('Error de red o el servidor está caído.');
+        }
+        setAuth({ token: null, roles: [] });
+      }
+    };
+    checkAuth();
+  }, []);
+  
+    return (
+      <AuthContext.Provider value={{ auth, setAuth }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  };

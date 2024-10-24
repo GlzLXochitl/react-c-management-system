@@ -1,3 +1,8 @@
+.container-body-disposition-privacy {
+    margin-top: 5rem;
+}
+
+
 /* CONTENEDOR DEL TEXTO */
 #container-text {
     margin: 0 auto;
@@ -24,4 +29,10 @@
     color: #666;
     margin-top: 3rem;
     margin-bottom: 10rem;
+}
+
+.data-time-site-privacy {
+    margin-top: 3rem;
+    margin-bottom: 10rem;
+    text-align: right;
 }

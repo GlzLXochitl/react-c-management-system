@@ -1,25 +1,37 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProtectedRoute, { NotFoundRoute } from './../src/routes/ProtectedRoute.jsx';
 import { AuthProvider } from '../src/context/AuthProvider';
 
-//import ProtectedRoute from '../src/routes/ProtectedRoute';
-
+// Importaciones de administrador
 import AppAdminDashboard from '../src/utils/Admin/AdminDashboard.js';
 import AppAlumnListAdmin from '../src/utils/Admin/AlumnListAdmin.js';
-import AppForm from './utils/Common/Form.js';
-import AppChangePassword from '../src/utils/Common/ChangePassword.js';
-import AppComments from '../src/utils/Common/Comments.js';
-import AppHelp from '../src/utils/Common/Help.js';
-import AppLogin from '../src/utils/Common/Login.js';
-import AppLoginNotRegistered from '../src/utils/Common/LoginNotRegistered.js';
-import AppNotifications from '../src/utils/Common/Notifications.js';
-import AppPrivacy from '../src/utils/Common/Privacy.js';
-import AppAlumnListTeacher from '../src/utils/Teacher/AlumnListTeacher.js';
-import AppTeacherDashboard from '../src/utils/Teacher/TeacherDashboard.js';
-import AppProfile from '../src/utils/User/Profile.js';
-import AppUserDashboard from '../src/utils/User/UserDashboard.js';
-import AppUserRegister from '../src/utils/Common/UserRegister.js';
 import AppFormRegisterCourse from '../src/utils/Admin/FormRegisterCourse.js';
+import AppFormRegisterStudentsBefore from './utils/Admin/FormRegisterStudentsBefore.js';
+import AppFormRegisterCoordinator from './utils/Admin/FormRegisterCoordinator.js';
+import AppFormCreateCourse from './utils/Admin/FormCreateCourse.js';
+
+// Importaciones de profesor
+import AppTeacherDashboard from '../src/utils/Teacher/TeacherDashboard.js';
+import AppAlumnListTeacher from '../src/utils/Teacher/AlumnListTeacher.js';
+
+// Importaciones de usuario
+import AppUserDashboard from '../src/utils/User/UserDashboard.js';
+import AppProfile from '../src/utils/User/Profile.js';
+import AppFormApply from '../src/utils/User/FormApply.js';
+
+// Importaciones sin protección
+import AppLogin from '../src/utils/Common/Login.js';
+import AppUserRegister from '../src/utils/Common/UserRegister.js';
+import AppChangePassword from '../src/utils/Common/ChangePassword.js';
+
+// Importaciones comunes
+import AppHelp from '../src/utils/Common/Help.js';
+import AppPrivacy from '../src/utils/Common/Privacy.js';
+
+import AppForm from './utils/Common/Form.js';
+
+import AppHome from './utils/Common/Home.js';
 
 const App = () => {
   return (
@@ -28,91 +40,55 @@ const App = () => {
         <Routes>
           <Route path="/" element={<AppLogin />} />
 
-          {/*<Route path="admin-dashboard" element={
-            <ProtectedRoute>
-              <AppAdminDashboard />
-            </ProtectedRoute>
-          } />
-
-          <Route path="alumn-list-admin" element={
-            <ProtectedRoute>
-              <AppAlumnListAdmin />
-            </ProtectedRoute>
-          } />
+          <Route path="home" element={<AppHome />} />
           
-          <Route path="form" element={
-            <ProtectedRoute>
-              <AppForm />
+          <Route path="admin/*" element={
+            <ProtectedRoute allowedRoles={[1]}>
+              <Routes>
+                <Route path="dashboard" element={<AppAdminDashboard />} />
+                <Route path="alumn-list" element={<AppAlumnListAdmin />} />
+                <Route path="form-register-course" element={<AppFormRegisterCourse />} />
+                <Route path="form-register-students-before" element={<AppFormRegisterStudentsBefore />} />
+                <Route path="form-register-coordinator" element={<AppFormRegisterCoordinator />} />
+                <Route path="form-create-course" element={<AppFormCreateCourse />} />
+              </Routes>
             </ProtectedRoute>
           } />
 
-          <Route path="chage-password" element={
-            <ProtectedRoute>
-              <AppChangePassword />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="comments" element={
-            <ProtectedRoute>
-              <AppComments />
+          <Route path="teacher/*" element={
+            <ProtectedRoute allowedRoles={[3]}>
+              <Routes>
+                <Route path="dashboard" element={<AppTeacherDashboard />} />
+                <Route path="alumn-list" element={<AppAlumnListTeacher />} />
+              </Routes>
             </ProtectedRoute>
           } />
 
-          <Route path="notifications" element={
-            <ProtectedRoute>
-              <AppNotifications />
+          <Route path="user/*" element={
+            <ProtectedRoute allowedRoles={[2]}>
+              <Routes>
+                <Route path="dashboard" element={<AppUserDashboard />} />
+                <Route path="profile" element={<AppProfile />} />
+                <Route path="form-apply" element={<AppFormApply />} />
+              </Routes>
             </ProtectedRoute>
           } />
 
-          <Route path="alumn-list-teacher" element={
-            <ProtectedRoute>
-              <AppAlumnListTeacher />
+          <Route path="common/*" element={
+            <ProtectedRoute allowedRoles={[1, 2, 3]}>
+              <Routes>
+                <Route path="help" element={<AppHelp />} />
+                <Route path="privacy" element={<AppPrivacy />} />
+              </Routes>
             </ProtectedRoute>
           } />
 
-          <Route path="teacher-dashboard" element={
-            <ProtectedRoute>
-              <AppTeacherDashboard />
-            </ProtectedRoute>
-          } />
-         
-         <Route path="profile" element={
-            <ProtectedRoute>
-              <AppProfile />
-            </ProtectedRoute>
-          } />
-
-          <Route path="user-dashboard" element={
-            <ProtectedRoute>
-              <AppUserDashboard />
-            </ProtectedRoute>
-          } />
-           
-          <Route path="user-register" element={
-            <ProtectedRoute>
-              <AppUserRegister />
-            </ProtectedRoute>
-          } />
-
-           */}
-
-          <Route path="admin-dashboard" element={<AppAdminDashboard />} />
-          <Route path="alumn-list-admin" element={<AppAlumnListAdmin />} />
-          <Route path="form" element={<AppForm />} />
-          <Route path="change-password" element={<AppChangePassword />} />
-          <Route path="comments" element={<AppComments />} />
-          <Route path="notifications" element={<AppNotifications />} />
-          <Route path="alumn-list-teacher" element={<AppAlumnListTeacher />} />
-          <Route path="teacher-dashboard" element={<AppTeacherDashboard />} />
-          <Route path="profile" element={<AppProfile />} />
-          <Route path="user-dashboard" element={<AppUserDashboard />} />
           <Route path="user-register" element={<AppUserRegister />} />
-          <Route path="form-register-course" element={<AppFormRegisterCourse />} />
-          
-          <Route path="help" element={<AppHelp />} />
-          <Route path="not-registered" element={<AppLoginNotRegistered />} />
-          <Route path="privacy" element={<AppPrivacy />} />
-          
+          <Route path="change-password" element={<AppChangePassword />} />
+          <Route path="*" element={<NotFoundRoute />} />  {/* Comodin para rutas inexistentes */}
+
+          <Route path="form" element={<AppForm />} />  {/*testing  ??*/}
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>
@@ -120,4 +96,3 @@ const App = () => {
 };
 
 export default App;
-

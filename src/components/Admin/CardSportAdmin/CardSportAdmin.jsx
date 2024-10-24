@@ -32,7 +32,7 @@ function CardSportAdmin() {
                                 <p className="card-text"><small className="text-body-secondary"><strong>Telefono:</strong>(+49) 30 1234567</small></p>
                             </div> 
                             <div className='btn-disposition'>
-                                <Link to="/alumnListAdmin"><div type="button" class="btn btn-primary">Ver listado de alumnos</div></Link>                
+                                <Link to="/alumnListAdmin"><div type="button" className="btn btn-primary">Ver listado de alumnos</div></Link>                
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ function CardSportAdmin() {
                                 <p className="card-text"><small className="text-body-secondary"><strong>Telefono:</strong>  (+49) 30 1234567</small></p>
                             </div> 
                             <div className='btn-disposition'>
-                                <Link to="/alumnListAdmin"><div type="button" class="btn btn-primary">Ver listado de alumnos</div></Link>                
+                                <Link to="/alumnListAdmin"><div type="button" className="btn btn-primary">Ver listado de alumnos</div></Link>                
                             </div>
 
                         </div>

@@ -19,8 +19,8 @@ function Notifications() {
                             <div className="cards-container">
                                 
                                 {/* CONTENEDOR DE TARJETAS */}
-                                <div class="card" id="primera" style={{ boxShadow: '0 4px 8px 0 #AED6F1 , 0 6px 20px 0 #AED6F1 ' }}>
-                                    <div class="card-body">
+                                <div className="card" id="primera" style={{ boxShadow: '0 4px 8px 0 #AED6F1 , 0 6px 20px 0 #AED6F1 ' }}>
+                                    <div className="card-body">
                                         <div className="data-notification">
                                             <div className="title-notification-alert-style">
                                                 ¡Inscripciones abiertas a talleres deportivos y culturales Mayo – Agosto 2024!
@@ -39,8 +39,8 @@ function Notifications() {
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-body">
+                                <div className="card">
+                                    <div className="card-body">
                                         <div className="data-notification">
                                             <div className="title-notification-alert-style">
                                                 Te invitamos a ser parte del nuevo equipo deportivo de futbol americano  
@@ -59,8 +59,8 @@ function Notifications() {
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-body">
+                                <div className="card">
+                                    <div className="card-body">
                                         <div className="data-notification">
                                             <div className="title-notification-alert-style">
                                                 ¡No olvides que este 3 de Mayo ya podrás ser parte de un club cultural!

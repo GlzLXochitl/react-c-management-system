@@ -1,0 +1,30 @@
+.btn-apply-student-course-dispocition {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+}
+
+.btn-apply-student-course-style {
+    text-decoration: none; /* Quita el subrayado */
+    color: inherit !important; /* Usa el color del botón */
+    border-color: #C30E2E;
+    color: #C30E2E  !important; /* Usa el color del botón */
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+}
+
+.btn-apply-student-course-style:hover {
+    text-decoration: none; /* Asegura que no haya subrayado al pasar el ratón */
+    color: inherit !important; /* Usa el color del botón */
+    background-color: #C30E2E;
+    color: white  !important; /* Usa el color del botón */
+    border-color: #C30E2E;
+    
+}
+
+
+

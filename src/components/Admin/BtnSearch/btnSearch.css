@@ -1,0 +1,34 @@
+.btn-view-admin-dispocition {
+    display: flex;
+    justify-content: left;
+    align-items: right;
+    width: auto;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+}
+
+.btn-view-admin-style {
+    text-decoration: none; /* Quita el subrayado */
+    color: inherit !important; /* Usa el color del botón */
+    border-color: #1B5A7D;
+    color: #1B5A7D  !important; /* Usa el color del botón */
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+    margin-right: .5rem;
+    margin-left: .5rem;
+}
+
+.btn-view-admin-style:hover {
+    text-decoration: none; /* Asegura que no haya subrayado al pasar el ratón */
+    color: inherit !important; /* Usa el color del botón */
+    background-color: #C30E2E;
+    color: white  !important; /* Usa el color del botón */
+    border-color: #C30E2E;
+    
+}
+
+
+

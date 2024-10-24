@@ -61,7 +61,7 @@
   border-radius: 10%; /* Esto crea un círculo perfecto */
   padding: 3px;
   margin-right: 10px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.103);
 
 }
 
@@ -88,5 +88,6 @@
 
 }
 
-
-
+#header-logotype {
+ border: none;
+}

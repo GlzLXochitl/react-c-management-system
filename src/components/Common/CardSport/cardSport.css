@@ -131,3 +131,6 @@
   width: 1rem; /* Ajusta el ancho del contenedor al tamaño deseado */
 }
 
+.custom-card {
+  margin-bottom: -5rem;
+}

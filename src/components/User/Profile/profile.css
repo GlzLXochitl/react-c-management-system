@@ -150,9 +150,16 @@
   .display-4 {
     font-size: 50px;
   }
-  #jumbotron {
-    width: 100%;
-  }
+  
+  .jumbotron-dashboard {
+    background-image: url('../../../../public/images/Welcome.jpeg');
+  }  
+  
+
+    
+  
+  
+
   .content {
     margin-left: 10px;
     margin-right: 10px;
@@ -188,4 +195,62 @@
       line-height: 1.4rem;
     }
   }
+}
+
+.content-style-jum {
+  margin-top: 5rem;
+}
+
+.name-style-jum {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.career-style-jum {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.container-jum-porfile-dispocition {
+  margin-top: 2rem;
+}
+
+.porfile-presentation-container-dispocition {
+  margin-left: 5rem;
+  margin-right: 5rem; 
+  margin-bottom: 7rem;
+}
+
+.credits-history-table-dispocition {
+  margin-top: 2rem;
+}
+
+.contact-dispocition {
+  margin-top: 3rem;
+  margin-top: 2rem;
+}
+
+.porfile-info-style-bold {
+  font-weight: 500;
+  text-align: justify;
+}
+
+.porfile-info-style {
+  font-weight: 400;
+  text-align: justify;
+}
+
+.info-profile-margin {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.text-slogan {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.img-jum-dispocition {
+  width: 40%;
+  height: 100%;
 }

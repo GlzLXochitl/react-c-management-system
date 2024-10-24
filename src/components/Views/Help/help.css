@@ -1,3 +1,8 @@
+.container-body-disposition-help {
+    margin-top: 6rem;
+    margin-bottom: 10rem;
+}
+
 /* CONTENEDOR DEL TEXTO */
 #container-text {
     margin: 0 auto;
@@ -23,5 +28,17 @@
     font-size: 14px;
     color: #666;
     margin-top: 3rem;
+    margin-bottom: 10rem;
+}
+
+.help-sub-jum {
+    font-weight: 500;
+}
+
+.content-help-info-dispocition {
+
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 0 auto; /* Center horizontally */
     margin-bottom: 10rem;
 }
